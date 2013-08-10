@@ -22,9 +22,9 @@ public class ExtractFromCompressedData {
 		job.setJobName("Extract From Compressed Data");
 
 		FileInputFormat.setInputPaths(job, new Path(this.getClass()
-				.getClassLoader().getResource("com.zone1.gz").toString()));
+				.getClassLoader().getResource("com.zone10.gz").toString()));
 		FileOutputFormat.setOutputPath(job, new Path(
-				"output/extractCompressedData.out"));
+				"output"));
 
 		job.setMapperClass(DomainNamesMapper.class);
 		job.setReducerClass(DomainNamesReducer.class);
@@ -42,21 +42,29 @@ public class ExtractFromCompressedData {
 
 	public static class DomainNamesMapper extends
 			Mapper<LongWritable, Text, Text, Text> {
+		private HtmlUnitDomainNamesProcessor htmlUnitDomainNamesProcessor;
 		@Override
 		public void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
+			this.htmlUnitDomainNamesProcessor = new HtmlUnitDomainNamesProcessor();
 			String line = value.toString();
 			String[] arr = line.split(" ");
 			Text domainKey = new Text();
 			Text values = new Text();
-			
-			if (arr.length == 3) {
-				domainKey.set(arr[0]);
-				values.set(arr[1]+"~"+arr[2]);
-				context.write(domainKey, values);
-			}
 			Counter totalRecordsProcessedCounter = context.getCounter(MyCounter.TOTAL_RECORDS_PROCESSED_IN_MAP);
-	        totalRecordsProcessedCounter.increment(1);
+			if (arr.length == 3) {
+				String domainName = arr[0];
+				domainKey.set(domainName);
+				try {
+					String content = htmlUnitDomainNamesProcessor.getWebPageContent("http://"+domainName.substring(domainName.indexOf(".")+1)+".com");
+					values.set(arr[1]+"~"+arr[2]+"~"+content);
+					context.write(domainKey, values);
+			        totalRecordsProcessedCounter.increment(1);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
 		}
 	}
 
@@ -67,15 +75,17 @@ public class ExtractFromCompressedData {
 				Context context) throws IOException, InterruptedException {
 			String number = "";
 			String ipAddress = "";
+			String content = "";
 			
 			for (Text value :  values) {
 				String[] valuesArr = value.toString().split("~");
-				if (valuesArr.length == 2) {
+				if (valuesArr.length == 3) {
 					number = valuesArr[0];
 					ipAddress = valuesArr[1];
+					content = valuesArr[2];
 				}
 			}
-			String outputString = number+" "+ipAddress;
+			String outputString = number+" "+ipAddress+" "+content;
 			context.write(key, new Text(outputString));
 		}
 	}
