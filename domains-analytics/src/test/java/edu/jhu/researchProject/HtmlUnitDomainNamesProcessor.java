@@ -18,7 +18,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 	        System.out.println("Connecting to: " + webUrl);
 	        HtmlPage page = webClient.getPage(webUrl);
 	        HtmlBody pageBody = (HtmlBody) page.getBody();
-	        System.out.println(pageBody.asText());
+	        //System.out.println(pageBody.asText());
 	        webClient.closeAllWindows();
 	        return pageBody.asText();
 	    }
