@@ -30,6 +30,8 @@ package edu.jhu.researchProject.mapReduceProcess;
 	            //Use the mutator object to insert a column and value pair to an existing key
 	            mutator.insert("sample", "AuthCollection", HFactory.createStringColumn("username", "admin"));
 	            mutator.insert("sample", "AuthCollection", HFactory.createStringColumn("password", "admin"));
+	            mutator.insert("sample", "AuthCollection", HFactory.createStringColumn("test", "testing"));
+	            mutator.insert("sample", "AuthCollection", HFactory.createStringColumn("grade", "A"));
 	             
 	            System.out.println("Data Inserted");
 	            System.out.println();
@@ -128,10 +130,10 @@ package edu.jhu.researchProject.mapReduceProcess;
 	     
 	 public static void main(String[] args) {
 	   
-	 // insertData() ;
+	 insertData() ;
 	  retrieveData() ;
 	  updateData() ;
-	  deleteData() ;
+	 // deleteData() ;
 	         
 	 }
 	}

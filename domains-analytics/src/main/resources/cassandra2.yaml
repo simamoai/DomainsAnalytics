@@ -7,7 +7,7 @@
 
 # The name of the cluster. This is mainly used to prevent machines in
 # one logical cluster from joining another.
-cluster_name: 'Test Web Pages Cluster'
+cluster_name: 'Test Cluster'
 
 # If you are using an order-preserving partitioner and you know your key
 # distribution, you can specify the token for this node to use. (Keys
@@ -344,11 +344,30 @@ index_interval: 128
 #       Cassandra will not load these definitions during startup. See
 #       http://wiki.apache.org/cassandra/FAQ#no_keyspaces for an explanation.
 keyspaces:
-    - name: WebPageKeyspace
+    - name: Keyspace1
       replica_placement_strategy: org.apache.cassandra.locator.SimpleStrategy
       replication_factor: 1
       column_families:
-        - name: 'AccessedWebPages'
+        - name: Authors
+          compare_with: BytesType
+        
+        - name: BlogEntries
+          compare_with: BytesType
+
+        - name: 'TaggedPosts'
+          compare_with: TimeUUIDType
+       
+        - name: 'Comments'
           compare_with: TimeUUIDType
           column_type: Super
           compare_subcolumns_with: BytesType
+          
+        - name: 'output_words'
+          compare_with: BytesType
+
+        - name: Indexed1
+          default_validation_class: LongType
+          column_metadata:
+            - name: birthdate
+              validator_class: LongType
+              index_type: KEYS

@@ -27,13 +27,7 @@ public class AccessedWebPageDAOImpl extends AbstractDao implements AccessedWebPa
 		super(keyspace);
 		
 	}
-	/*public List<AccessedWebPage> getAccessedWebPageList(){
-		Mutator<String> mutator = HFactory.createMutator(keyspace, StringSerializer.get());
-		UUID timeUUID  = HelperDAO.getTimeUUID();
-		List<HColumn<String,String>> columns = HelperDAO.;
-		return null;
-		
-	}*/
+
 	public AccessedWebPage getAccessedWebPage(String pageKey){
 		  SuperSliceQuery<String, byte[], String, String> query = HFactory
 			        .createSuperSliceQuery(keySpace, StringSerializer.get(), BytesArraySerializer.get(),

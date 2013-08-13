@@ -24,7 +24,7 @@ public class AccessedWebPageCassandraTest {
 	private Keyspace keySpace;
 
 	private AccessedWebPageService accessedWebPageService;
-
+	
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		BootStrap.init();
@@ -49,5 +49,10 @@ public class AccessedWebPageCassandraTest {
 		
 		assertEquals("accessed web page for Domain inserted successfully", 
 				accessedWebPage, accessedWebPageService.getAccessedWebPage("Domain1"));
+	}
+	
+	public static void  main(String[] args) throws Exception{
+		AccessedWebPageCassandraTest accessedWebPageCassandraTest = new AccessedWebPageCassandraTest();
+		accessedWebPageCassandraTest.testInsertAccessedWebPageToCassandra();
 	}
 }
