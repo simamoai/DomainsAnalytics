@@ -16,24 +16,16 @@ public class AccessedWebPageServiceImpl implements AccessedWebPageService{
 		this.accessedWebPageDAO = new AccessedWebPageDAOImpl(keySpace);
 	}
 
-
 	@Override
-	public List<AccessedWebPage> getAccessedWebPageList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AccessedWebPage> getAccessedWebPages(String pageKey) {
+		return this.accessedWebPageDAO.getAccessedWebPages(pageKey);
 	}
 
 
 	@Override
-	public AccessedWebPage getAccessedWebPage(String pageKey) {
-		return this.accessedWebPageDAO.getAccessedWebPage(pageKey);
-	}
-
-
-	@Override
-	public void insertAccessedWebPage(AccessedWebPage accessedWebPage) {
+	public void insertAccessedWebPage(String key, AccessedWebPage accessedWebPage) {
 		// TODO Auto-generated method stub
-		this.accessedWebPageDAO.insertAccessedWebPage(accessedWebPage);
+		this.accessedWebPageDAO.insertAccessedWebPage(key, accessedWebPage);
 	}
 
 

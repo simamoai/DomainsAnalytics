@@ -1,4 +1,4 @@
-package edu.jhu.researchProject.mapReduceProcess;
+package com.jhu.researchProject.mapReduceProcess;
 
 import java.io.IOException;
 
@@ -7,7 +7,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Counter;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import edu.jhu.researchProject.mapReduceProcess.ExtractFromCompressedData.MyCounter;
+import com.jhu.researchProject.mapReduceProcess.ExtractFromCompressedData.MyCounter;
+
 
 public class DomainNamesMapper extends Mapper<LongWritable, Text, Text, Text> {
 

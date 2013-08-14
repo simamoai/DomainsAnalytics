@@ -1,4 +1,4 @@
-package edu.jhu.researchProject.mapReduceProcess;
+package com.jhu.researchProject.mapReduceProcess;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;

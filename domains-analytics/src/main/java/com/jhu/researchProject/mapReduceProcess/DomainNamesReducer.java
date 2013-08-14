@@ -1,4 +1,4 @@
-package edu.jhu.researchProject.mapReduceProcess;
+package com.jhu.researchProject.mapReduceProcess;
 
 import java.io.IOException;
 import me.prettyprint.hector.api.Cluster;
@@ -43,9 +43,8 @@ public class DomainNamesReducer extends Reducer<Text, Text, Text, Text> {
 		this.reducedAccessedWebPage = new AccessedWebPage(key.toString(),
 				content, ipAddress, pageCode);
 		if (reducedAccessedWebPage != null) {
-			accessedWebPageService.insertAccessedWebPage(reducedAccessedWebPage);
+			accessedWebPageService.insertAccessedWebPage("domains", reducedAccessedWebPage);
 			context.write(key, new Text(reducedAccessedWebPage.toString()));
 		}
-		
 	}
 }

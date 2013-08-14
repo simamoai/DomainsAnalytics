@@ -1,7 +1,7 @@
 package edu.jhu.researchProject.noSqlDBUtility;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertTrue;
+import java.util.List;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,15 +44,23 @@ public class AccessedWebPageCassandraTest {
 		AccessedWebPage accessedWebPage = new AccessedWebPage();
 		accessedWebPage.setPageKey("Domain1");
 		accessedWebPage.setPageContent("some stupid content");
+		AccessedWebPage accessedWebPage2 = new AccessedWebPage();
+		accessedWebPage2.setPageKey("Domain2");
+		accessedWebPage2.setPageContent("some stupid content");
 
-		accessedWebPageService.insertAccessedWebPage(accessedWebPage);
+		accessedWebPageService.insertAccessedWebPage("domains", accessedWebPage);
+		accessedWebPageService.insertAccessedWebPage("domains", accessedWebPage2);
 		
-		assertEquals("accessed web page for Domain inserted successfully", 
-				accessedWebPage, accessedWebPageService.getAccessedWebPage("Domain1"));
+		List<AccessedWebPage> listOfAccessedWebPages = accessedWebPageService.getAccessedWebPages("domains");
+		assertTrue("AccessWebPages table contains Domain1", listOfAccessedWebPages.contains(accessedWebPage));
+		assertTrue("AccessWebPages table contains Domain2", listOfAccessedWebPages.contains(accessedWebPage2));
 	}
 	
-	public static void  main(String[] args) throws Exception{
-		AccessedWebPageCassandraTest accessedWebPageCassandraTest = new AccessedWebPageCassandraTest();
-		accessedWebPageCassandraTest.testInsertAccessedWebPageToCassandra();
+	@Test
+	public void testGetAllAccessedWebPagesFromCassandra() throws Exception {
+		List<AccessedWebPage> listOfAccessedWebPages = null;
+		listOfAccessedWebPages = accessedWebPageService.getAccessedWebPages("domains");
+		
+		assertTrue("size of list is greater than 2", listOfAccessedWebPages.size() > 2);
 	}
 }

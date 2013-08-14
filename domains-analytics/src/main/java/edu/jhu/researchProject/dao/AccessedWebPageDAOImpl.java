@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.welflex.dao.AbstractDao;
 import com.welflex.dao.DaoHelper;
-
 import me.prettyprint.cassandra.serializers.BytesArraySerializer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;
@@ -28,7 +27,7 @@ public class AccessedWebPageDAOImpl extends AbstractDao implements AccessedWebPa
 		
 	}
 
-	public AccessedWebPage getAccessedWebPage(String pageKey){
+	public List<AccessedWebPage> getAccessedWebPages(String pageKey){
 		  SuperSliceQuery<String, byte[], String, String> query = HFactory
 			        .createSuperSliceQuery(keySpace, StringSerializer.get(), BytesArraySerializer.get(),
 			          StringSerializer.get(), StringSerializer.get())
@@ -50,27 +49,26 @@ public class AccessedWebPageDAOImpl extends AbstractDao implements AccessedWebPa
 			    if (retResults.size() == 0) {
 			    	return null;
 			    }
-			    return retResults.get(0);
+			    return retResults;
 		
 	}
-	public void insertAccessedWebPage(AccessedWebPage accessedWebPage){
+	
+	public void insertAccessedWebPage(String key, AccessedWebPage accessedWebPage){
 		Mutator<String> mutator = HFactory.createMutator(keySpace, StringSerializer.get());
 		UUID timeUUID  = HelperDAO.getTimeUUID();
 		List<HColumn<String,String>> columns = HelperDAO.getStringCols(accessedWebPage);
 		 HSuperColumn<UUID, String, String> sCol = HFactory.createSuperColumn(timeUUID, columns,
 			      UUIDSerializer.get(), StringSerializer.get(), StringSerializer.get());
-		 mutator.insert(accessedWebPage.getPageKey(), COL_FAMILY_ACCESSEDWEBPAGES, sCol);
+		 mutator.insert(key, COL_FAMILY_ACCESSEDWEBPAGES, sCol);
 		 
 	}
+	
 	public void deleteAccessedWebPage(String pageKey){
 		
 	}
+	
 	public void updateAccessedWebPage(){
 		
 	}
-	@Override
-	public List<AccessedWebPage> getAccessedWebPageList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
+
