@@ -9,7 +9,6 @@ import com.welflex.BootStrap;
 import edu.jhu.researchProject.model.AccessedWebPage;
 import edu.jhu.researchProject.service.AccessedWebPageServiceImpl;
 import edu.jhu.researchProject.service.AccessedWebPageService;
-
 import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.factory.HFactory;

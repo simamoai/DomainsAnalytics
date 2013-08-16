@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.Job;
 
 public class ExtractFromCompressedData {
+	
 	public static enum MyCounter {
 		TOTAL_RECORDS_PROCESSED_IN_MAP
 	}
